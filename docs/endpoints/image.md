@@ -32,7 +32,8 @@ Error:
 {
   "title!": "string",
   "author!": "string<unique>", // user id
-  "files!": [Images]
+  "imageDriveId": "string<unique>",
+  "optimizedImageDriveId": "string<unique>"
 }
 ```
 

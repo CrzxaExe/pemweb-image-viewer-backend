@@ -1,15 +1,43 @@
-# Elysia with Bun runtime
+# Pemweb Image Viewer Backend
 
-## Getting Started
-To get started with this template, simply paste this command into your terminal:
-```bash
-bun create elysia ./elysia-example
+Backend app for handling
+
+## Requirement
+
+- Bun v1.3.9
+
+## Installing
+
+- Cloning this repo or download the zip of this repo and extracting on whatever you want
+- Installing all required dependencies by running this command:
+
+```sh
+bun install
 ```
 
-## Development
-To start the development server run:
-```bash
+- Running the app using this command
+
+```sh
+bun start
+```
+
+or use development script to do hot reload every time you save the changes
+
+```sh
+bun dev
+// or
 bun run dev
 ```
 
-Open http://localhost:3000/ with your browser to see the result.
+## Tech Stack
+
+- TypeScript
+- Elysia.js
+- GoogleApis
+- Sharp
+
+## Why using this stack
+
+- We are familiar with this tech stack
+- Elysia.js + Bun is solid combo and provided fast response
+- Bun are fast and can easily compile TypeScript file directly without needing to bundle to JavaScript first

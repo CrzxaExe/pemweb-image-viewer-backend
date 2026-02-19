@@ -65,13 +65,20 @@ Error:
 Success:
 
 ```json
-
+// Status 200
+{
+  "success": true
+}
 ```
 
 Error:
 
 ```json
-
+// Status 4xx
+{
+  "success": false,
+  "error": "string"
+}
 ```
 
 ## Delete

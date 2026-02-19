@@ -3,8 +3,8 @@ import { env } from "@yolk-oss/elysia-env";
 import router from "./router";
 import cors from "@elysiajs/cors";
 import { helmet } from "elysia-helmet";
-import { elysiaXSS } from "elysia-xss";
-import { rateLimit } from "elysia-rate-limit";
+// import { elysiaXSS } from "elysia-xss";
+// import { rateLimit } from "elysia-rate-limit";
 import { Terminal } from "./utils/Terminal";
 import { Database } from "./utils/Database";
 
@@ -36,24 +36,36 @@ const app = new Elysia()
         description: "Mongodb uri",
         error: "MONGO_URI is required",
       }),
+      DRIVE_CLIENT: t.String({
+        description: "Drive Client key",
+        error: "DRIVE_CLIENT is required",
+      }),
+      DRIVE_SECRET: t.String({
+        description: "Drive SECRET key",
+        error: "DRIVE_SECRET is required",
+      }),
+      DRIVE_REFRESH_TOKEN: t.String({
+        description: "Drive Refresh Token key",
+        error: "DRIVE_REFRESH_TOKEN is required",
+      }),
     }),
   )
   // CORS settings
   .use(cors())
   .use(helmet())
-  .use(elysiaXSS())
-  .use(
-    rateLimit({
-      max: 50,
-      duration: 1_000 * 5,
-    }),
-  )
+  // .use(elysiaXSS())
+  // .use(
+  //   rateLimit({
+  //     max: 50,
+  //     duration: 1_000 * 5,
+  //   }),
+  // )
   .use(router)
   .listen(port);
 
 process.title = title;
 
 Terminal.log("App started on port", port);
-Database.Connect(process.env.MONGO_URI!);
+Database.Connect(process.env.MONGO_URI!); // Elysia has been checked, it will always be there
 
 export { app };

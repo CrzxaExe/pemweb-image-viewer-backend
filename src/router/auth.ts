@@ -1,8 +1,7 @@
 import Elysia from "elysia";
 
 const authController = new Elysia()
-  .post("/user/sign", () => {})
-  .post("/user/create", () => {})
-  .patch("/user/update/:id", () => {});
+  .post("/auth/register", () => {})
+  .patch("/auth/login", () => {});
 
 export default authController;

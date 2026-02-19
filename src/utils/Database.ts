@@ -1,26 +1,30 @@
-import mongoose, { Connection } from "mongoose";
+import { MongoClient, ServerApiVersion } from "mongodb";
 import { Terminal } from "./Terminal";
 
-let connection: Connection | null = null;
+let connection: MongoClient | null = null;
+
 /**
  * Utility class to handle database connection
  */
 class Database {
   /**
-   * Connect ot database
+   * Connect to Database
    * @param uri Mongodb uri
    * @returns Promise of mongoose connection
    */
-  static async Connect(uri: string): Promise<Connection | undefined> {
+  static async Connect(uri: string): Promise<MongoClient | undefined> {
     try {
       if (connection) return connection;
 
-      const newConnection = await mongoose.connect(uri, {
-        connectTimeoutMS: 10000,
-        maxConnecting: 30,
-      });
+      const newConnection = await new MongoClient(uri, {
+        serverApi: {
+          version: ServerApiVersion.v1,
+          strict: true,
+          deprecationErrors: true,
+        },
+      }).connect();
 
-      connection = newConnection.connection;
+      connection = newConnection;
 
       Terminal.info("Successfully to connect to database");
 
@@ -30,6 +34,11 @@ class Database {
     }
   }
 
+  /**
+   * Close connection to Database
+   *
+   * @returns nothing
+   */
   static async Close(): Promise<void> {
     try {
       if (!connection) return;

@@ -1,11 +1,12 @@
 # Schemas
 
-## Image
+## Content
 
 ```json
 {
   "title": "string",
-  "imageUrl": "string<url>", // url from gdrive
+  "imageDriveId": "string<unique>", // url from gdrive
+  "optimizedImageDriveId": "string<unique>", // url from gdrive
   "id": "string<unique>",
   "context": {
     "author": "string<unique>", // user id
@@ -20,14 +21,12 @@
 
 ```json
 {
-  "username": "string<unique>",
-  "id": "string<unique>",
+  "username": "string<unique>", // Public id
+  "id": "string<unique>", // Private id
   "email": "email",
   "password": "hash",
-  "profile": {
-    "photoAlt?": "string<url>",
-    "displayName?": "string"
-  },
+  "avatarUrl?": "string<url>",
+  "displayName?": "string",
   "createAt": "date"
 }
 ```
