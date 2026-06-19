@@ -3,20 +3,9 @@ import { env } from "@yolk-oss/elysia-env";
 import router from "./router";
 import cors from "@elysiajs/cors";
 import { helmet } from "elysia-helmet";
-import { Terminal } from "./utils/Terminal";
-import { Database } from "./utils/Database";
 import swagger from "@elysiajs/swagger";
 
 import "./services/GDrive";
-
-/**
- * Application port
- */
-const port: number = parseInt(process.env.PORT!) ?? 3000;
-/**
- * Application name
- */
-const title: string = process.env.APP_NAME ?? "API";
 
 /**
  * Application
@@ -89,19 +78,6 @@ const app = new Elysia()
   )
   .use(helmet())
   .use(cors())
-  .use(router)
-  .listen(port);
-
-process.title = title;
-
-Terminal.log("App started on port", port);
-await Database.Connect(process.env.MONGO_URI!); // Elysia has been checked, it will always be there
-
-process.on("unhandledRejection", (reason) => {
-  Terminal.error("Unhandled Rejection:", reason);
-});
-process.on("uncaughtException", (error) => {
-  Terminal.error("Uncaught Exception:", error);
-});
+  .use(router);
 
 export { app };
