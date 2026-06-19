@@ -47,8 +47,16 @@ const authController = new Elysia({ prefix: "auth" })
       },
     },
   )
-  .patch("/login", ({ body, cookie, redirect }) => {}, {
-    detail: { hide: true },
-  });
+  .patch(
+    "/login",
+    (
+      {
+        /*body, cookie, redirect*/
+      },
+    ) => {},
+    {
+      detail: { hide: true },
+    },
+  );
 
 export default authController;
