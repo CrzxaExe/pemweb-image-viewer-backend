@@ -6,6 +6,7 @@ import { helmet } from "elysia-helmet";
 import swagger from "@elysiajs/swagger";
 import jwt from "@elysiajs/jwt";
 import { jwtPlugin } from "./plugins/jwt";
+import node from "@elysiajs/node";
 
 const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "http://localhost:5173")
   .split(",")
@@ -13,7 +14,7 @@ const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "http://localhost:5173")
 /**
  * Application
  */
-const app = new Elysia()
+const app = new Elysia({ adapter: node() })
   .use(
     // Safe env checker
     env({
