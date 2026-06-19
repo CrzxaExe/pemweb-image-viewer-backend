@@ -1,6 +1,6 @@
-import { app } from "./api";
-import { Database } from "./api/utils/Database";
-import { Terminal } from "./api/utils/Terminal";
+import { app } from "./src";
+import { Database } from "./src/utils/Database";
+import { Terminal } from "./src/utils/Terminal";
 
 /**
  * Application port
