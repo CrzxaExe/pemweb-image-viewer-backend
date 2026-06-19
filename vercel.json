@@ -2,7 +2,7 @@
   "bunVersion": "1.2.7",
   "functions": {
     "src/**/*.ts": {
-      "runtime": "bun1.x"
+      "runtime": "bun1.2.7"
     }
   }
 }
