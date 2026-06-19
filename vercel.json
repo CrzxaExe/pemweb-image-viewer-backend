@@ -1,3 +1,8 @@
 {
-  "bunVersion": "1.2.7"
+  "bunVersion": "1.2.7",
+  "functions": {
+    "src/**/*.ts": {
+      "runtime": "bun1.x"
+    }
+  }
 }
