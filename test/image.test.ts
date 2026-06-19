@@ -1,5 +1,5 @@
 import { describe, expect, it } from "bun:test";
-import { app } from "../src";
+import { app } from "../api";
 
 describe("Test image endpoints", () => {
   it("Should get image by id", async () => {
