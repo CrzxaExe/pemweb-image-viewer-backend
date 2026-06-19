@@ -1,12 +1,15 @@
 import Elysia from "elysia";
 import imageController from "./image";
 import authController from "./auth";
-import uploadController from "./upload";
+import driveController from "./drive";
+import userController from "./user";
+import logger from "../middleware/logging";
 
 /**
  * Application route controller
  */
 const router = new Elysia()
+  .onBeforeHandle(logger)
   .get("/", () => ({ message: "test" }))
 
   // AuthController
@@ -16,6 +19,9 @@ const router = new Elysia()
   .use(imageController)
 
   // Upload Controller
-  .use(uploadController);
+  .use(driveController)
+
+  // Collection Controller
+  .use(userController);
 
 export default router;

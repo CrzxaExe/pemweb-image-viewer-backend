@@ -35,7 +35,9 @@ Error:
 
 ```json
 {
-  "username!": "string<unique>"
+  "username!": "string<unique>",
+  "email!": "string<email>",
+  "password!": "string"
 }
 ```
 

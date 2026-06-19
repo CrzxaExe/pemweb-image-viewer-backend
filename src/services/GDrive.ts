@@ -1,5 +1,6 @@
 import { google } from "googleapis";
 import { Generator } from "../utils/Generator";
+import { Readable } from "stream";
 
 const auth = new google.auth.OAuth2(
   process.env.DRIVE_CLIENT,
@@ -16,22 +17,40 @@ const drive = google.drive({
   auth,
 });
 
+/**
+ * Utility class to handle Google Drive api methods
+ */
 export class GDrive {
-  static async upload(file: Buffer<ArrayBufferLike>, mimeType: string) {
+  /**
+   * Upload single file to GDrive folder
+   * @param file file buffer
+   * @param mimeType mimetype of file
+   * @param ext file extension
+   * @returns result of services
+   */
+  static async upload(
+    file: Buffer<ArrayBufferLike>,
+    mimeType: string,
+    ext: string,
+  ) {
     const res = await drive.files.create({
       requestBody: {
-        name: Generator.id(),
+        name: Generator.id() + ext,
         mimeType,
       },
       media: {
         mimeType,
-        body: file,
+        body: Readable.from(file),
       },
     });
 
     return res;
   }
 
+  /**
+   * Delete image with matches id from GDrive
+   * @param fileId id of GDrive image
+   */
   static async delete(fileId: string) {
     const res = await drive.files.delete({ fileId });
 
@@ -40,6 +59,11 @@ export class GDrive {
 
   static async update() {}
 
+  /**
+   * Get image metadata from GDrive
+   * @param fileId id of GDrive image
+   * @returns image metadata
+   */
   static async read(fileId: string) {
     const res = await drive.files.get({
       fileId,

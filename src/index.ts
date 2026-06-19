@@ -3,10 +3,11 @@ import { env } from "@yolk-oss/elysia-env";
 import router from "./router";
 import cors from "@elysiajs/cors";
 import { helmet } from "elysia-helmet";
-// import { elysiaXSS } from "elysia-xss";
-// import { rateLimit } from "elysia-rate-limit";
 import { Terminal } from "./utils/Terminal";
 import { Database } from "./utils/Database";
+import swagger from "@elysiajs/swagger";
+
+import "./services/GDrive";
 
 /**
  * Application port
@@ -51,21 +52,56 @@ const app = new Elysia()
     }),
   )
   // CORS settings
-  .use(cors())
+  .use(
+    swagger<"/docs">({
+      autoDarkMode: true,
+      scalarConfig: {
+        defaultOpenAllTags: false,
+        hideTestRequestButton: true,
+        hiddenClients: {
+          c: true,
+          clojure: true,
+          java: true,
+          php: true,
+          csharp: true,
+          kotlin: true,
+          powershell: true,
+          swift: true,
+          objc: true,
+          ruby: true,
+          shell: true,
+          r: true,
+          ocaml: true,
+        },
+      },
+      documentation: {
+        info: {
+          title: "Zxifile Documentation",
+          version: "1.0.0",
+          description:
+            "This is documentation about Zxifile endpoint for easier other developer to use this service",
+          contact: {
+            name: "CrzxaExe",
+          },
+        },
+      },
+    }),
+  )
   .use(helmet())
-  // .use(elysiaXSS())
-  // .use(
-  //   rateLimit({
-  //     max: 50,
-  //     duration: 1_000 * 5,
-  //   }),
-  // )
+  .use(cors())
   .use(router)
   .listen(port);
 
 process.title = title;
 
 Terminal.log("App started on port", port);
-Database.Connect(process.env.MONGO_URI!); // Elysia has been checked, it will always be there
+await Database.Connect(process.env.MONGO_URI!); // Elysia has been checked, it will always be there
+
+process.on("unhandledRejection", (reason) => {
+  Terminal.error("Unhandled Rejection:", reason);
+});
+process.on("uncaughtException", (error) => {
+  Terminal.error("Uncaught Exception:", error);
+});
 
 export { app };

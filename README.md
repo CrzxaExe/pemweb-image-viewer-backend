@@ -4,7 +4,7 @@ Backend app for handling
 
 ## Requirement
 
-- Bun v1.3.9
+- Bun v1.2.21
 
 ## Installing
 
@@ -31,9 +31,10 @@ bun run dev
 
 ## Tech Stack
 
-- TypeScript
+- Bun
 - Elysia.js
 - GoogleApis
+- TypeScript
 - Sharp
 
 ## Why using this stack
