@@ -4,9 +4,12 @@ import router from "./router";
 import cors from "@elysiajs/cors";
 import { helmet } from "elysia-helmet";
 import swagger from "@elysiajs/swagger";
+import jwt from "@elysiajs/jwt";
+import { jwtPlugin } from "./plugins/jwt";
 
-import "./services/GDrive";
-
+const ALLOWED_ORIGINS = (process.env.ALLOWED_ORIGINS ?? "http://localhost:5173")
+  .split(",")
+  .map((o) => o.trim());
 /**
  * Application
  */
@@ -77,7 +80,13 @@ const app = new Elysia()
     }),
   )
   .use(helmet())
-  .use(cors())
+  .use(
+    cors({
+      origin: ALLOWED_ORIGINS,
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+      allowedHeaders: ["Content-Type", "Authorization"],
+    }),
+  )
   .use(router);
 
 export { app };

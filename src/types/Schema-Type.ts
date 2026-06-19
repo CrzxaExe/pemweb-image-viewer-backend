@@ -11,7 +11,6 @@ export type Image = {
   context: {
     author: string;
     mimetype: string;
-    size: number;
   };
 
   createAt: string;
