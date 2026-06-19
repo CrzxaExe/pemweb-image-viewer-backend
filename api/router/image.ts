@@ -3,7 +3,7 @@ import { GDrive } from "../services/GDrive";
 import { Terminal } from "../utils/Terminal";
 import { Database } from "../utils/Database";
 import { Image } from "../types/Schema-Type";
-import { randomUUIDv7 } from "bun";
+import { Generator } from "../utils/Generator";
 
 const imageController = new Elysia()
   .get("/q/:id", () => ({}), {
@@ -27,7 +27,7 @@ const imageController = new Elysia()
           return status("Not Found", { error: "Username not found" });
 
         const result = await Database.db.addOne<Image>("images", {
-          imageId: randomUUIDv7(),
+          imageId: Generator.id(),
           createAt: new Date().toISOString(),
           imageDriveId: imageId,
           optimizedImageDriveId: optimizedImageId,
