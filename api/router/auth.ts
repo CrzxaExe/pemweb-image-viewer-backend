@@ -2,6 +2,7 @@ import Elysia, { t } from "elysia";
 import { Database } from "../utils/Database";
 import { Terminal } from "../utils/Terminal";
 import { jwtPlugin } from "../plugins/jwt";
+import bcrypt from "bcryptjs";
 
 const authController = new Elysia({ prefix: "auth" })
   .use(jwtPlugin)
@@ -63,11 +64,7 @@ const authController = new Elysia({ prefix: "auth" })
 
         if (!exist) return status("Not Found", { error: "Email not found" });
 
-        const isVerify = await Bun.password.verify(
-          password,
-          exist.password,
-          "bcrypt",
-        );
+        const isVerify = bcrypt.compare(password, exist.password);
 
         if (!isVerify)
           return status("Not Acceptable", { error: "Password dont match" });

@@ -13,6 +13,7 @@ import {
 } from "mongodb";
 import { Terminal } from "./Terminal";
 import { Entities, PartialEntity, User } from "../types/Schema-Type";
+import bcrypt from "bcryptjs";
 
 let connection: MongoClient | null = null;
 
@@ -214,10 +215,7 @@ class UserDatabase {
     try {
       const result = UniversalDatabase.addOne<User>("users", {
         ...data,
-        password: await Bun.password.hash(data.password, {
-          algorithm: "bcrypt",
-          cost: 8,
-        }),
+        password: await bcrypt.hash(data.password, 8),
       });
 
       return result;
@@ -269,11 +267,7 @@ class UserDatabase {
     try {
       const _id = new ObjectId(model._id);
 
-      if (model.password)
-        model.password = await Bun.password.hash(model.password, {
-          algorithm: "bcrypt",
-          cost: 8,
-        });
+      if (model.password) model.password = await bcrypt.hash(model.password, 8);
 
       delete model._id;
       const res = await Database.db.findOneAndUpdate(
